@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -10,6 +11,7 @@ class PostController extends Controller
 
     public function show ($id)
     {
-        return view('blog-post', ['id' => $id]);
+        $post = Post::findOrFail($id);
+        return view('blog-post', ['post' => $post]);
     }
 }
