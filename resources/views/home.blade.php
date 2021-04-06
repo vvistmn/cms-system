@@ -17,7 +17,7 @@
             @if (!empty($post->body))
             <p class="card-text">{{\Illuminate\Support\Str::limit($post->body, '50', '...')}}</p>
             @endif
-            <a href="{{route('post') . '/' . $post->id}}" class="btn btn-primary">Подробнее</a>
+            <a href="{{route('post'), $post->id}}" class="btn btn-primary">Подробнее</a>
             </div>
             <div class="card-footer text-muted">
             Posted on {{$post->created_at}} by
