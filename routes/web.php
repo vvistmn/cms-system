@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\PostController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
