@@ -21,6 +21,17 @@ class PostController extends Controller
 
     public function store (Request $request)
     {
-        dd($request);
+        $inputs = $request->validate([
+            'title' => 'required|unique:posts|min:8|max:255',
+            'body' => 'required',
+            'post_image' => 'mimes:jpg, jpeg,bmp,png'
+        ]);
+        
+        if ($request->post_image) {
+            $inputs['post_image'] = $request->post_image->store('images');
+        }
+        auth()->user()->posts()->create($inputs);
+
+        return redirect('/admin');
     }
 }
