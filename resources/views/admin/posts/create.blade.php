@@ -11,11 +11,11 @@
                 <input type="text" name="title" class="form-control" id="title" aria-describedby="" placeholder="Тут должен быть заголовок записи">
             </div>
             <div class="form-group">
-                <textarea name="content" class="form-control" id="content"cols="30" rows="10"></textarea>
+                <textarea name="body" class="form-control" id="body"cols="30" rows="10"></textarea>
             </div>
             <div class="form-group">
-                <label for="image-post">Изображение записи</label>
-                <input type="file" name="image-post" class="form-control-file" id="image-post">
+                <label for="post_image">Изображение записи</label>
+                <input type="file" name="post_image" class="form-control-file" id="post_image">
             </div>
             <button type="submit" class="btn btn-primary">Сохранить запись</button>
         </form>

@@ -5,10 +5,15 @@
         </h1>
         
         <!-- Blog Post -->
-        @foreach ($posts as $post) 
+        @foreach ($posts as $post)
+        
         <div class="card mb-4">
             @if (!empty($post->post_image))
-            <img class="card-img-top" src="{{$post->post_image}}" alt="Card image cap">
+                @if (stripos($post->post_image, 'http') !== false)
+                    <img class="card-img-top" src="{{$post->post_image}}" alt="Card image cap">
+                @else
+                    <img class="card-img-top" src="{{asset('storage/' . $post->post_image)}}" alt="Card image cap">
+                @endif
             @endif
             <div class="card-body">
             @if (!empty($post->title))
