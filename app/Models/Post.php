@@ -27,4 +27,15 @@ class Post extends Model
         }
         return $value->format('F d, Y');
     }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = Carbon::now();
+        $value = Carbon::create($value);
+
+        if ($date->format('F d, Y') == $value->format('F d, Y')) {
+            return $value->diffForHumans();
+        }
+        return $value->format('F d, Y');
+    }
 }
