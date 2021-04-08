@@ -9,11 +9,7 @@
         
         <div class="card mb-4">
             @if (!empty($post->post_image))
-                @if (stripos($post->post_image, 'http') !== false)
-                    <img class="card-img-top" src="{{$post->post_image}}" alt="Card image cap">
-                @else
-                    <img class="card-img-top" src="{{asset('storage/' . $post->post_image)}}" alt="Card image cap">
-                @endif
+                <img class="card-img-top" src="{{$post->post_image}}" alt="Card image cap">
             @endif
             <div class="card-body">
             @if (!empty($post->title))

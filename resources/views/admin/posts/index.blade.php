@@ -6,9 +6,11 @@
     @section('content')
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
+        @if(Session::has('message_posts'))
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">{{Session::get('message_posts')}}</h6>
         </div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -21,6 +23,7 @@
                         <th>Автор</th>
                         <th>Дата изменения</th>
                         <th>Дата создания</th>
+                        <th>Удалить</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -32,6 +35,7 @@
                         <th>Автор</th>
                         <th>Дата изменения</th>
                         <th>Дата создания</th>
+                        <th>Удалить</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -41,15 +45,18 @@
                         <td>{{$post->title}}</td>
                         <td>{{\Illuminate\Support\Str::limit($post->body, '50', '...')}}</td>
                         <td>
-                            @if (stripos($post->post_image, 'http') !== false)
-                                <img height="40px" src="{{$post->post_image}}" alt="{{$post->title}}">
-                            @else
-                                <img height="40px" src="{{asset('storage/' . $post->post_image)}}" alt="{{$post->title}}p">
-                            @endif
+                            <img width="200px" src="{{$post->post_image}}" alt="{{$post->title}}">
                         </td>
                         <td>{{$post->user->name}}</td>
                         <td>{{$post->updated_at}}</td>
                         <td>{{$post->created_at}}</td>
+                        <td>
+                            <form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>
