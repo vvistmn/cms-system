@@ -53,11 +53,13 @@
                         <td>{{$post->updated_at}}</td>
                         <td>{{$post->created_at}}</td>
                         <td>
+                            @can('delete', $post)
                             <form method="post" action="{{route('post.destroy', $post->id)}}" enctype="multipart/form-data">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
+                            @endcan
                         </td>
                         <td>
                             <a href="{{route('post.edit', $post->id)}}" class="btn btn-info">Редактировать</a>

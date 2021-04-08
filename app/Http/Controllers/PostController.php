@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 
 class PostController extends Controller
@@ -49,23 +50,31 @@ class PostController extends Controller
     }
 
     public function update (Request $request, Post $post) {
-        $inputs = $request->validate([
-            'title' => 'required|min:8|max:255',
-            'body' => 'required',
-            'post_image' => 'mimes:jpg, jpeg,bmp,png'
-        ]);
+        $user = Auth::user();
 
-        if (!empty($request->post_image)) {
-            $inputs['post_image'] = $request->post_image->store('images');
+        if ($user->can('update', $post)) {
+            $inputs = $request->validate([
+                'title' => 'required|min:8|max:255',
+                'body' => 'required',
+                'post_image' => 'mimes:jpg, jpeg,bmp,png'
+            ]);
+
+            if (!empty($request->post_image)) {
+                $inputs['post_image'] = $request->post_image->store('images');
+            } else {
+                $inputs['post_image'] = $post->post_image;
+            }
+            // $this->authoriza('update'); // Не работает
+
+            $post->update($inputs);
+
+            $request->session()->flash('message_posts', 'Запись была отредактирована "' . $inputs['title'] . '"');
+
+            return redirect()->route('post.index');
         } else {
-            $inputs['post_image'] = $post->post_image;
+            Session::flash('message_posts', 'К сожалению, вы не можете изнить запись "' . $post->title . '"');
+            return redirect(route('post.index'));
         }
-        
-        $post->update($inputs);
-
-        $request->session()->flash('message_posts', 'Запись была отредактирована "' . $inputs['title'] . '"');
-
-        return redirect()->route('post.index');
     }
 
     public function destroy (Post $post) 
