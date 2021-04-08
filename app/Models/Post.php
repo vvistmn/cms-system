@@ -38,4 +38,13 @@ class Post extends Model
         }
         return $value->format('F d, Y');
     }
+
+    public function getPostImageAttribute($value)
+    {
+        if (stripos($value, 'http') !== false) {
+            return $value;
+        } else {
+           return asset('storage/' . $value);
+        }
+    }
 }
