@@ -43,6 +43,31 @@ class PostController extends Controller
         return redirect()->route('post.index');
     }
 
+    public function edit (Post $post)
+    {
+        return view('admin.posts.edit', ['post' => $post]);
+    }
+
+    public function update (Request $request, Post $post) {
+        $inputs = $request->validate([
+            'title' => 'required|min:8|max:255',
+            'body' => 'required',
+            'post_image' => 'mimes:jpg, jpeg,bmp,png'
+        ]);
+
+        if (!empty($request->post_image)) {
+            $inputs['post_image'] = $request->post_image->store('images');
+        } else {
+            $inputs['post_image'] = $post->post_image;
+        }
+        
+        $post->update($inputs);
+
+        $request->session()->flash('message_posts', 'Запись была отредактирована "' . $inputs['title'] . '"');
+
+        return redirect()->route('post.index');
+    }
+
     public function destroy (Post $post) 
     {
         $post->delete();

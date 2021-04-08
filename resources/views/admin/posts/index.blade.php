@@ -24,6 +24,7 @@
                         <th>Дата изменения</th>
                         <th>Дата создания</th>
                         <th>Удалить</th>
+                        <th>Редактировать</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -36,6 +37,7 @@
                         <th>Дата изменения</th>
                         <th>Дата создания</th>
                         <th>Удалить</th>
+                        <th>Редактировать</th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -56,6 +58,9 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Удалить</button>
                             </form>
+                        </td>
+                        <td>
+                            <a href="{{route('post.edit', $post->id)}}" class="btn btn-info">Редактировать</a>
                         </td>
                     </tr>
                     @endforeach
