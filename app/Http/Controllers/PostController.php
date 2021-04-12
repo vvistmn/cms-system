@@ -46,7 +46,13 @@ class PostController extends Controller
 
     public function edit (Post $post)
     {
-        return view('admin.posts.edit', ['post' => $post]);
+        $user = Auth::user();
+
+        if ($user->can('update', $post)) {
+            return view('admin.posts.edit', ['post' => $post]);
+        } else {
+            return back();
+        }
     }
 
     public function update (Request $request, Post $post) {

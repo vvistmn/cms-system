@@ -62,7 +62,9 @@
                             @endcan
                         </td>
                         <td>
+                            @can('update', $post)
                             <a href="{{route('post.edit', $post->id)}}" class="btn btn-info">Редактировать</a>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach
