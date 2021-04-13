@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::patch('/admin/posts/{post}', [PostController::class, 'update'])->name('post.update');
 
+    Route::get('admin/users/{user}/profile', [UserController::class, 'show'])->name('user.profile.show');
+    Route::put('admin/users/{user}/update', [UserController::class, 'update'])->name('user.profile.update');
 });
