@@ -1,4 +1,4 @@
-<x-admin-master>
+<x-admin.admin-master>
     @section('title')
         <h1 class="h3 mb-4 text-gray-800">Новая запись</h1>
     @show()
@@ -20,4 +20,4 @@
             <button type="submit" class="btn btn-primary">Сохранить запись</button>
         </form>
     @show()
-</x-admin-master>
+</x-admin.admin-master>

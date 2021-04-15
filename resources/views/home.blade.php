@@ -1,4 +1,4 @@
-<x-home-master>
+<x-home.home-master>
     @section('content')
         <h1 class="my-4">Главная страница
             <small>Дополнительный текст</small>
@@ -37,4 +37,4 @@
             </li>
         </ul>
     @endsection
-</x-home-master>
+</x-home.home-master>
