@@ -1,4 +1,4 @@
-<x-admin-master>
+<x-admin.admin-master>
     @section('title')
         <h1 class="h3 mb-4 text-gray-800">Профиль пользователя: {{$user->name}}</h1>
     @show()
@@ -58,4 +58,4 @@
             </div>
         </div>
     @show()
-</x-admin-master>
+</x-admin.admin-master>
