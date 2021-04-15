@@ -58,6 +58,7 @@
             </div>
         </div>
         <br>
+        @if (auth()->user()->userHasRole('Admin'))
         <div class="row">
             <div class="col-sm-12">
                 <div class="card shadow mb-4">
@@ -129,5 +130,6 @@
                 </div>
             </div>
         </div>
+        @endif
     @show()
 </x-admin.admin-master>
