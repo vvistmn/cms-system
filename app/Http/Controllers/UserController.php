@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -16,7 +17,11 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return view('admin.users.show', ['user' => $user]);
+        $roles = Role::all();
+        return view('admin.users.show', [
+            'user' => $user,
+            'roles' => $roles
+            ]);
     }
 
     public function update(Request $request, User $user)
@@ -36,6 +41,18 @@ class UserController extends Controller
 
         $user->update($inputs);
 
+        return back();
+    }
+    
+    public function attach(User $user, Request $request)
+    {
+        $user->roles()->attach($request->role);
+        return back();
+    }
+
+    public function detach(User $user, Request $request)
+    {
+        $user->roles()->detach($request->role);
         return back();
     }
 

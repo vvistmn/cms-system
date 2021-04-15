@@ -57,5 +57,77 @@
                 </form>
             </div>
         </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Выбрать роль для {{$user->name}}</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>Выбрать</th>
+                                    <th>ID Роли</th>
+                                    <th>Название</th>
+                                    <th>Slug</th>
+                                    <th>Добавить</th>
+                                    <th>Удалить</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <tr>
+                                    <th>Выбрать</th>
+                                    <th>ID Роли</th>
+                                    <th>Название</th>
+                                    <th>Slug</th>
+                                    <th>Добавить</th>
+                                    <th>Удалить</th>
+                                </tr>
+                                </tfoot>
+                                <tbody>
+                                @foreach($roles as $role)
+                                <tr>
+                                    <td>
+                                        <input type="checkbox"
+                                        @foreach($user->roles as $user_role)
+                                            @if($user_role->slug == $role->slug)
+                                                checked
+                                            @endif
+                                        @endforeach
+                                        >
+                                    </td>
+                                    <td>{{$role->id}}</td>
+                                    <td>{{$role->name}}</td>
+                                    <td>{{$role->slug}}</td>
+                                    <td>
+                                        <form method="post" action="{{route('user.role.attach', $user)}}" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" value="{{$role->id}}" name="role">
+                                            <button type="submit" class="btn btn-primary"
+                                            @if($user->roles->contains($role)) disabled @endif>Добавить</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form method="post" action="{{route('user.role.detach', $user)}}" enctype="multipart/form-data">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" value="{{$role->id}}" name="role">
+                                            <button type="submit" class="btn btn-danger"
+                                            @if(!$user->roles->contains($role)) disabled @endif>Удалить</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     @show()
 </x-admin.admin-master>
