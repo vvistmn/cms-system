@@ -1,4 +1,4 @@
-<x-admin-master>
+<x-admin.admin-master>
     @section('title')
         <h1 class="h3 mb-4 text-gray-800">Все записи</h1>
     @show()
@@ -86,4 +86,4 @@
     <!-- Page level custom scripts -->
     <!-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> -->
     @show
-</x-admin-master>
+</x-admin.admin-master>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,12 +26,5 @@ Route::get('/post/{post}', [PostController::class, 'show'])->name('post');
 
 Route::middleware('auth')->group(function () {
     Route::get('/admin', [AdminsController::class, 'index'])->name('admin.index');
-    
-    Route::get('/admin/posts', [PostController::class, 'index'])->name('post.index');
-    Route::get('/admin/posts/create', [PostController::class, 'create'])->name('post.create');
-    Route::post('/admin/posts', [PostController::class, 'store'])->name('post.store');
-    Route::delete('/admin/posts/{post}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
-    Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
-    Route::patch('/admin/posts/{post}', [PostController::class, 'update'])->name('post.update');
-
 });
+

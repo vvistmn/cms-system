@@ -1,4 +1,4 @@
-<x-home-master>
+<x-home.home-master>
     @section('content')
         <!-- Title -->
         <h1 class="mt-4">{{$post->title}}</h1>
@@ -75,4 +75,4 @@
           </div>
         </div>
     @show
-</x-home-master>
+</x-home.home-master>
