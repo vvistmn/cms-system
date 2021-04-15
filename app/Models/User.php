@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\Permission;
+use Illuminate\Support\Str;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,6 +52,28 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        $date = Carbon::now();
+        $value = Carbon::create($value);
+
+        if ($date->format('F d, Y') == $value->format('F d, Y')) {
+            return $value->diffForHumans();
+        }
+        return $value->format('F d, Y');
+    }
+
+    public function getUpdatedAtAttribute($value)
+    {
+        $date = Carbon::now();
+        $value = Carbon::create($value);
+
+        if ($date->format('F d, Y') == $value->format('F d, Y')) {
+            return $value->diffForHumans();
+        }
+        return $value->format('F d, Y');
+    }
+
     public function getAvatarAttribute($value)
     {
         if (stripos($value, 'http') !== false) {
@@ -77,7 +101,7 @@ class User extends Authenticatable
     public function userHasRole($roleName)
     {
         foreach ($this->roles as $role) {
-            if ($role->name === $roleName) {
+            if (Str::lower($role->name) === Str::lower($roleName)) {
                 return true;
             }
         }

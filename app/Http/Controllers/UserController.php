@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    //
+    public function index()
+    {   
+        $users = User::all();
+        return view('admin.users.index', ['users' => $users]);
+    }
+
     public function show(User $user)
     {
         return view('admin.users.show', ['user' => $user]);
@@ -31,5 +37,12 @@ class UserController extends Controller
         $user->update($inputs);
 
         return back();
+    }
+
+    public function destroy(User $user)
+    {
+        $user->delete();
+        Session::flash('message_users', 'Пользователь был удален "' . $user->name . '"');
+        return redirect(route('user.index'));
     }
 }

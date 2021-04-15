@@ -34,6 +34,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/posts/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::patch('/admin/posts/{post}', [PostController::class, 'update'])->name('post.update');
 
+});
+
+Route::middleware(['role:Admin', 'auth'])->group(function () {
+    Route::get('/admin/users', [UserController::class, 'index'])->name('user.index');
+    Route::delete('/admin/users/{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+});
+
+Route::middleware(['can:view,user', 'auth'])->group(function () {
     Route::get('admin/users/{user}/profile', [UserController::class, 'show'])->name('user.profile.show');
     Route::put('admin/users/{user}/update', [UserController::class, 'update'])->name('user.profile.update');
 });
