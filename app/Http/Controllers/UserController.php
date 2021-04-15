@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         $inputs = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'alpha_dash'],
+            'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'avatar' => ['file']
         ]);
