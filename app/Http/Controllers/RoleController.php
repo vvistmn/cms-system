@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -35,7 +36,10 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', ['role' => $role]);
+        return view('admin.roles.edit', [
+            'role' => $role,
+            'permissions' => Permission::all(),
+        ]);
     }
 
     public function update(Request $request, Role $role)
@@ -47,17 +51,29 @@ class RoleController extends Controller
         $inputs['name'] = preg_replace('/(\s|\t|\n)+/ui', " " , Str::title($inputs['name']));
         $inputs['slug'] = Str::of(Str::lower($inputs['name']))->slug('-');
 
-        $role->update($inputs);
+        $role->fill($inputs);
 
         if ($role->isDirty('name')) {
             $request->session()->flash('message_role', 'Роль была изменина "' . $inputs['name'] . '"');
+            $role->save();
             return redirect()->route('role.index');
         } else {
             $request->session()->flash('message_role', 'Роль не изменилась "' . $role->name . '"');
-            return redirect()->route('role.index');
-
+            return back();
         }
 
+    }
+
+    public function attach(Role $role, Request $request)
+    {
+        $role->permissions()->attach($request->permission);
+        return back();
+    }
+
+    public function detach(Role $role, Request $request)
+    {
+        $role->permissions()->detach($request->permission);
+        return back();
     }
 
     public function destroy (Role $role) 
