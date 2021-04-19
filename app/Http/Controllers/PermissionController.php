@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -35,7 +36,10 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        return view('admin.permissions.edit', ['permission' => $permission]);
+        return view('admin.permissions.edit', [
+            'permission' => $permission,
+            'roles' => Role::all(),
+            ]);
     }
 
     public function update(Permission $permission, Request $request)
@@ -47,20 +51,28 @@ class PermissionController extends Controller
         $inputs['name'] = preg_replace('/(\s|\t|\n)+/ui', " " , Str::title($inputs['name']));
         $inputs['slug'] = preg_replace('/(\s|\t|\n)+/ui', "-" , Str::lower($inputs['name']));
 
-        $permission->update($inputs);
+        $permission->fill($inputs);
 
         if ($permission->isDirty('name')) {
             $request->session()->flash('message_permission', 'Права были изменина "' . $inputs['name'] . '"');
-
+            $permission->save();
             return redirect()->route('permission.index');
         } else {
             $request->session()->flash('message_permission', 'Права не изменились "' . $permission->name . '"');
-
-            return redirect()->route('permission.index');
+            return back();
         }
+    }
 
+    public function attach(Permission $permission, Request $request)
+    {
+        $permission->roles()->attach($request->role);
+        return back();
+    }
 
-
+    public function detach(Permission $permission, Request $request)
+    {
+        $permission->roles()->detach($request->role);
+        return back();
     }
 
     public function destroy (Permission $permission) 
